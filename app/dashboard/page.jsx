@@ -51,6 +51,17 @@ export default function Dashboard() {
             </Link>
           </CardContent>
         </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Study Content</CardTitle>
+            <CardDescription>Generate Study plan for any topic</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/dashboard/study-content">
+              <Button className="w-full">Generate</Button>
+            </Link>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
