@@ -99,7 +99,7 @@ export default function Home() {
             </div>
             
             <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40 leading-[1.1]">
-            Welcome to UPSC Prep AI, <span className="inline-block"><SparklesText sparklesCount={15} text={"prepare"} className="text-6xl sm:text-7xl md:text-8xl text-white/80" /></span> well.
+            Welcome to UPSC Brain AI, <span className="inline-block"><SparklesText sparklesCount={15} text={"prepare"} className="text-6xl sm:text-7xl md:text-8xl text-white/80" /></span> well.
              
             </h1>
            

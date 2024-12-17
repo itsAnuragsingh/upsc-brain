@@ -10,7 +10,7 @@ export function IntroNav() {
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-black/50 backdrop-blur-md">
       <div className="flex items-center space-x-4">
         <Link href="/" className="text-xl font-semibold text-white">
-        PrepPoint
+        UPSC Brain
         </Link>
       </div>
       <div className="flex items-center space-x-4">
