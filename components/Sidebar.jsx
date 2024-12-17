@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Home, BookOpen, Video, FileText, BarChart2 } from 'lucide-react'
+import { Home, BookOpen, Video, FileText, BarChart2, CircleFadingPlus } from 'lucide-react'
 
 const Sidebar = () => {
   return (
@@ -25,16 +25,17 @@ const Sidebar = () => {
               <span>Exam Simulation</span>
             </Link>
           </li>
-          <li>
-            <Link href="/dashboard/document-chatbot" className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300">
-              <FileText size={20} />
-              <span>Document Chatbot</span>
-            </Link>
-          </li>
+          
           <li>
             <Link href="/dashboard/performance" className="flex items-center space-x-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
               <BarChart2 size={20} />
               <span>Performance Tracker</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/dashboard/performance" className="flex items-center space-x-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
+              <CircleFadingPlus size={20} />
+              <span>Study Content</span>
             </Link>
           </li>
         </ul>

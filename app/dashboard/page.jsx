@@ -31,12 +31,12 @@ export default function Dashboard() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Document Chatbot</CardTitle>
-            <CardDescription>Interact with your study materials</CardDescription>
+            <CardTitle>Study Content Generator</CardTitle>
+            <CardDescription>Generate Any Topic</CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/dashboard/document-chatbot">
-              <Button className="w-full">Open Chatbot</Button>
+            <Link href="/dashboard/study-content">
+              <Button className="w-full">Generate</Button>
             </Link>
           </CardContent>
         </Card>
@@ -55,4 +55,5 @@ export default function Dashboard() {
     </div>
   )
 }
+
 
