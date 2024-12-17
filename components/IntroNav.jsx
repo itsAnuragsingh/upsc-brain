@@ -16,7 +16,7 @@ export function IntroNav() {
       <div className="flex items-center space-x-4">
       <ModeToggle />
         {user ?
-        (<Link href="/sign-up">
+        (<Link href="/dashboard">
           <Button className="bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
             Dashboard
           </Button>

@@ -1,122 +1,124 @@
-'use client'
+"use client";
+import { useState } from 'react';
+import { generateStudyPlan } from '@/aiServices/studyPlanGenerator';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Calendar } from '@/components/ui/calendar'
-import { Progress } from '@/components/ui/progress'
+export default function StudyPlanGenerator() {
+  const [formData, setFormData] = useState({
+    subject: '',
+    availableHours: '',
+    currentLevel: 'beginner',
+    targetDate: ''
+  });
+  
+  const [studyPlan, setStudyPlan] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-export default function StudyPlan() {
-  const [plan, setPlan] = useState('')
-  const [subject, setSubject] = useState('')
-  const [duration, setDuration] = useState('')
-  const [date, setDate] = useState(new Date())
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-  const generatePlan = () => {
-    // This is where you'd integrate with an AI service
-    setPlan(`Here's your personalized study plan for ${subject} over ${duration}:
-
-1. Week 1-2: Foundation and Basic Concepts
-   - Study key theories and principles
-   - Review important historical events
-   - Practice basic problem-solving techniques
-
-2. Week 3-4: Advanced Topics and Analysis
-   - Dive deep into complex subjects
-   - Analyze case studies and real-world applications
-   - Begin mock test preparations
-
-3. Week 5-6: Revision and Practice
-   - Revise all major topics
-   - Take full-length practice tests
-   - Focus on weak areas identified in mock tests
-
-Remember to take regular breaks and stay consistent with your study schedule!`)
-  }
+    try {
+      const result = await generateStudyPlan(formData);
+      if (result.success) {
+        setStudyPlan(result.plan);
+      } else {
+        setError(result.error);
+      }
+    } catch (err) {
+      setError('Failed to generate study plan. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-4xl font-bold">AI Study Plan Generator</h1>
-      <Tabs defaultValue="generate" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="generate">Generate Plan</TabsTrigger>
-          <TabsTrigger value="view">View Current Plan</TabsTrigger>
-        </TabsList>
-        <TabsContent value="generate">
-          <Card>
-            <CardHeader>
-              <CardTitle>Generate Your Personalized Study Plan</CardTitle>
-              <CardDescription>Select your subject and study duration to get started</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-4 mb-4">
-                <Select onValueChange={setSubject}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select subject" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="history">History</SelectItem>
-                    <SelectItem value="polity">Polity</SelectItem>
-                    <SelectItem value="geography">Geography</SelectItem>
-                    <SelectItem value="economics">Economics</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select onValueChange={setDuration}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1month">1 Month</SelectItem>
-                    <SelectItem value="3months">3 Months</SelectItem>
-                    <SelectItem value="6months">6 Months</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button onClick={generatePlan} className="mb-4" disabled={!subject || !duration}>Generate Study Plan</Button>
-              <Textarea 
-                value={plan} 
-                readOnly 
-                className="w-full h-[400px]"
-                placeholder="Your personalized study plan will appear here..."
+    <div className="max-w-4xl mx-auto p-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>AI Study Plan Generator</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="subject">Subject</Label>
+              <Input
+                id="subject"
+                value={formData.subject}
+                onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                placeholder="e.g., Indian History, Geography"
+                required
               />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="view">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Current Study Plan</CardTitle>
-                <CardDescription>Your active study schedule</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <h3 className="font-semibold mb-2">History - 3 Month Plan</h3>
-                <p className="mb-4">Week 3: Advanced Topics and Analysis</p>
-                <Progress value={33} className="mb-2" />
-                <p className="text-sm text-muted-foreground">33% Complete</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Study Calendar</CardTitle>
-                <CardDescription>Track your study sessions</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  className="rounded-md border"
-                />
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-  )
-}
+            </div>
 
+            <div>
+              <Label htmlFor="hours">Available Hours per Day</Label>
+              <Input
+                id="hours"
+                type="number"
+                min="1"
+                max="24"
+                value={formData.availableHours}
+                onChange={(e) => setFormData({...formData, availableHours: e.target.value})}
+                required
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="level">Current Level</Label>
+              <Select 
+                value={formData.currentLevel}
+                onValueChange={(value) => setFormData({...formData, currentLevel: value})}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="beginner">Beginner</SelectItem>
+                  <SelectItem value="intermediate">Intermediate</SelectItem>
+                  <SelectItem value="advanced">Advanced</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="targetDate">Target Date</Label>
+              <Input
+                id="targetDate"
+                type="date"
+                value={formData.targetDate}
+                onChange={(e) => setFormData({...formData, targetDate: e.target.value})}
+                required
+              />
+            </div>
+
+            <Button type="submit" disabled={loading}>
+              {loading ? 'Generating Plan...' : 'Generate Study Plan'}
+            </Button>
+          </form>
+
+          {error && (
+            <div className="mt-4 p-4 bg-red-50 text-red-600 rounded">
+              {error}
+            </div>
+          )}
+
+          {studyPlan && (
+            <div className="mt-6">
+              <h3 className="text-xl font-semibold mb-4">Your Personalized Study Plan</h3>
+              <div className="whitespace-pre-wrap bg-gray-50 p-4 rounded">
+                {studyPlan}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

@@ -20,7 +20,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/exam-simulation" className="flex items-center space-x-2 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300">
+            <Link href="/dashboard/exam" className="flex items-center space-x-2 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300">
               <Video size={20} />
               <span>Exam Simulation</span>
             </Link>
