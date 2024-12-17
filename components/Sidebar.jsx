@@ -33,7 +33,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/performance" className="flex items-center space-x-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
+            <Link href="/dashboard/study-content" className="flex items-center space-x-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
               <CircleFadingPlus size={20} />
               <span>Study Content</span>
             </Link>

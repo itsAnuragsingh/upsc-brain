@@ -112,7 +112,7 @@ export default function StudyPlanGenerator() {
           {studyPlan && (
             <div className="mt-6">
               <h3 className="text-xl font-semibold mb-4">Your Personalized Study Plan</h3>
-              <div className="whitespace-pre-wrap bg-gray-50 p-4 rounded">
+              <div className="whitespace-pre-wrap bg-gray-50 p-4 rounded dark:text-white">
                 {studyPlan}
               </div>
             </div>
