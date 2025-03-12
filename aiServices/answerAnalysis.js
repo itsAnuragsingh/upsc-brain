@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import vision from "@google-cloud/vision";
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
-const visionClient = new vision.ImageAnnotatorClient({
+const visionClient = new vision.ImageAnnotatorClient(}
   keyFilename: process.env.GOOGLE_VISION_KEY_PATH
 });
 
